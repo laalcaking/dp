@@ -37,6 +37,10 @@ public class MultipleScreens extends Application {
         Scene scene = new Scene(root, 400, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit('0');
+        });
     }
 
     public static void main(String[] args) {

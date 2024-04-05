@@ -65,8 +65,10 @@ public class ScheduledScoreboardExecutor {
 
         // Генерация 6 строк JSON
         for (int i = 1; i <= MAX_SCREEN_LINES_BASE; i++) {
-            int randomNumber = random.nextInt(100);
-            DisplayVehicle dv = new DisplayVehicle("Vehicle " + i, String.valueOf(randomNumber), String.valueOf(i));
+            int randomNumber = random.nextInt(44);
+            Vehicle someVehicle = new Vehicle();
+            String formattedNumber = DisplayVehicle.generateFormattedNumber(someVehicle.getRegNumber());
+            DisplayVehicle dv = new DisplayVehicle(formattedNumber, String.valueOf(randomNumber), String.valueOf(i));
             currentDisplayList.add(dv);
         }
 
