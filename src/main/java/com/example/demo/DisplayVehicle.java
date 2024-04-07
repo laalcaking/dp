@@ -45,7 +45,7 @@ public class DisplayVehicle {
             digits += random.nextInt(10);
         }
 
-        int lastDigit = random.nextInt(7);
+        int lastDigit = random.nextInt(1, 7);
 
         return String.format("%c%c%s-%d", firstLetter, secondLetter, digits, lastDigit);
     }

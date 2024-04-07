@@ -1,11 +1,15 @@
 package com.example.demo;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MultipleScreens extends Application {
@@ -25,22 +29,40 @@ public class MultipleScreens extends Application {
     }
 
     protected static void showScreen(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
-        VBox root = new VBox(10);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MultipleScreens.class.getResource("/MultipleScreensController.fxml"));
+            Parent root = fxmlLoader.load();
 
-        for (List<DisplayVehicle> dataList : jsonDataLists) {
-            for (DisplayVehicle data : dataList) {
-                Label info = new Label("Номер машины: " + " " + data.getVehicleNumber() + " Номер дока: " + data.getDockNumber());
-                root.getChildren().addAll(info);
+            MultipleScreensController controller = fxmlLoader.getController();
+
+            List<String> vehicleNumbers = new ArrayList<>();
+            List<String> dockNumbers = new ArrayList<>();
+            for (List<DisplayVehicle> dataList : jsonDataLists) {
+                for (DisplayVehicle data : dataList) {
+                    vehicleNumbers.add(data.getVehicleNumber());
+                    dockNumbers.add(data.getDockNumber());
+                }
             }
+            String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
+            String[] dockNumbersArray = dockNumbers.toArray(new String[0]);
+
+            controller.setVehicleNumber1(vehicleNumbersArray[0]);
+            controller.setVehicleNumber2(vehicleNumbersArray[1]);
+            controller.setVehicleNumber3(vehicleNumbersArray[2]);
+
+            controller.setDock1(dockNumbersArray[0]);
+            controller.setDock2(dockNumbersArray[1]);
+            controller.setDock3(dockNumbersArray[2]);
+
+            primaryStage.setScene(new Scene(root, 500, 400));
+            primaryStage.show();
+
+            primaryStage.setOnCloseRequest(event -> {
+                System.exit('0');
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        Scene scene = new Scene(root, 400, 300);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        primaryStage.setOnCloseRequest(event -> {
-            System.exit('0');
-        });
     }
 
     public static void main(String[] args) {
