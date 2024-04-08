@@ -24,25 +24,19 @@ public class DisplayVehicle {
     @JsonIgnore
     private final LocalDateTime creationDate = LocalDateTime.now();
 
-    boolean isExpired(Long expirationTime) {
-        return (LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - creationDate.toEpochSecond(ZoneOffset.UTC)) > expirationTime;
+    boolean isExpired() {
+        return (LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - creationDate.toEpochSecond(ZoneOffset.UTC)) > 60L;
     }
 
-    public DisplayVehicle(Vehicle vehicle, String dockNumber, String displayPos) {
-        this.vehicleNumber = generateFormattedNumber(vehicle.getRegNumber());
-        this.dockNumber = dockNumber;
-        this.displayPos = displayPos;
-    }
-
-    protected static String generateFormattedNumber(String regNumber) {
+    protected static String generateFormattedNumber() {
         Random random = new Random();
 
         char firstLetter = (char) ('A' + random.nextInt(26));
         char secondLetter = (char) ('A' + random.nextInt(26));
 
-        String digits = "";
+        StringBuilder digits = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-            digits += random.nextInt(10);
+            digits.append(random.nextInt(10));
         }
 
         int lastDigit = random.nextInt(1, 7);
