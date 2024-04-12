@@ -15,6 +15,7 @@ public class MultipleScreens extends Application {
     private final ScheduledScoreboardExecutor executor1;
     private final ScheduledScoreboardExecutor executor2;
 
+
     public MultipleScreens() {
         this.executor1 = new ScheduledScoreboardExecutor(new Stage());
         this.executor2 = new ScheduledScoreboardExecutor(new Stage());
@@ -22,16 +23,52 @@ public class MultipleScreens extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        executor1.start();
-        executor2.start();
+        executor1.startScreen1();
+        executor2.startScreen2();
     }
 
-    protected static void showScreen(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
+    protected static void showScreen1(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MultipleScreens.class.getResource("/MultipleScreensController.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MultipleScreens.class.getResource("/Screen1.fxml"));
             Parent root = fxmlLoader.load();
 
-            MultipleScreensController controller = fxmlLoader.getController();
+            Screen1Controller controller = fxmlLoader.getController();
+
+            List<String> vehicleNumbers = new ArrayList<>();
+            List<String> dockNumbers = new ArrayList<>();
+            for (List<DisplayVehicle> dataList : jsonDataLists) {
+                for (DisplayVehicle data : dataList) {
+                    vehicleNumbers.add(data.getVehicleNumber());
+                    dockNumbers.add(data.getDockNumber());
+                }
+            }
+
+            String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
+            String[] dockNumbersArray = dockNumbers.toArray(new String[0]);
+
+            controller.setBlinkingLabel(vehicleNumbersArray[0]);
+            controller.setVehicleNumber2(vehicleNumbersArray[1]);
+            controller.setVehicleNumber3(vehicleNumbersArray[2]);
+
+            controller.setDock2(dockNumbersArray[1]);
+            controller.setDock3(dockNumbersArray[2]);
+
+            primaryStage.setScene(new Scene(root, 500, 400));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+
+            primaryStage.setOnCloseRequest(event -> System.exit('0'));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected static void showScreen2(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MultipleScreens.class.getResource("/Screen2.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Screen2Controller controller = fxmlLoader.getController();
 
             List<String> vehicleNumbers = new ArrayList<>();
             List<String> dockNumbers = new ArrayList<>();

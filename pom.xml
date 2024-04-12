@@ -60,13 +60,13 @@
             <version>2.17.0</version>
         </dependency>
     </dependencies>
-
     <build>
         <resources>
             <resource>
                 <directory> src/main/resources</directory>
                 <includes>
-                    <include> MultipleScreensController.fxml </include>
+                    <include> Screen1.fxml </include>
+                    <include> Screen2.fxml </include>
                 </includes>
             </resource>
         </resources>
@@ -86,7 +86,6 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>com.example.demo/com.example.demo.HelloApplication</mainClass>

@@ -16,13 +16,19 @@ public class ScheduledScoreboardExecutor {
 
     final long UPDATE_TIME = 5 * 1_000;//millis
     final byte MAX_SCREEN_LINES_BASE = 6;
-    public DisplayScreen currentDisplayScreen = DisplayScreen.FIRST;
     public DisplayScreen nextDisplayScreen = DisplayScreen.FIRST;
 
     LinkedList<DisplayVehicle> queueVehicles = new LinkedList<>();
 
-    void start() {
-        executor.scheduleAtFixedRate(generateJson, 0, UPDATE_TIME, TimeUnit.MILLISECONDS);
+    private List<DisplayVehicle> currentDisplayList;
+
+
+    void startScreen1() {
+        executor.scheduleAtFixedRate(divideJsonForScreen1, 0, UPDATE_TIME, TimeUnit.MILLISECONDS);
+    }
+
+    void startScreen2() {
+        executor.scheduleAtFixedRate(divideJsonForScreen2, 0, UPDATE_TIME, TimeUnit.MILLISECONDS);
     }
 
     @Getter
@@ -34,37 +40,51 @@ public class ScheduledScoreboardExecutor {
         this.primaryStage = primaryStage;
     }
 
-
-    private final Runnable generateJson = new Runnable() {
+    private final Runnable divideJsonForScreen1 = new Runnable() {
         @SneakyThrows
         @Override
         public void run() {
-            jsonData = generateData();
-            Platform.runLater(() -> {
-                // Обновление сцены с новыми данными
-                MultipleScreens.showScreen(primaryStage, jsonData);
-            });
+            currentDisplayList = generateData();
+            jsonData = divideData(DisplayScreen.FIRST, currentDisplayList);
+            Platform.runLater(() -> MultipleScreens.showScreen1(primaryStage, jsonData));
         }
     };
 
-    private List<List<DisplayVehicle>> generateData() throws Exception {
-        currentDisplayScreen = nextDisplayScreen;
-        removeExpiredVehicles();
 
-        LinkedList<DisplayVehicle> currentDisplayList = new LinkedList<>();
+    private final Runnable divideJsonForScreen2 = new Runnable() {
+        @SneakyThrows
+        @Override
+        public void run() {
+            currentDisplayList = generateData();
+            jsonData = divideData(DisplayScreen.SECOND, currentDisplayList);
+            Platform.runLater(() -> MultipleScreens.showScreen2(primaryStage, jsonData));
+        }
+    };
+
+    protected List<DisplayVehicle> generateData() throws Exception {
+
+        currentDisplayList = new LinkedList<>();
 
         Random random = new Random();
 
+        currentDisplayList.add(new DisplayVehicle("Вызов на приемку", "0", "0"));
+
         // Генерация 6 строк JSON
-        for (int i = 1; i <= MAX_SCREEN_LINES_BASE; i++) {
+        for (int i = 2; i <= MAX_SCREEN_LINES_BASE; i++) {
             int randomNumber = random.nextInt(1, 44);
             String formattedNumber = DisplayVehicle.generateFormattedNumber();
             DisplayVehicle dv = new DisplayVehicle(formattedNumber, String.valueOf(randomNumber), String.valueOf(i));
             currentDisplayList.add(dv);
         }
 
+        return currentDisplayList;
+    }
+
+    protected List<List<DisplayVehicle>> divideData(DisplayScreen screen, List<DisplayVehicle> currentDisplayList) throws Exception {
+        removeExpiredVehicles();
+
         List<List<DisplayVehicle>> dividedLists = new ArrayList<>();
-        switch (currentDisplayScreen) {
+        switch (screen) {
             case FIRST:
                 // Добавляем в список первые три элемента списка
                 dividedLists.add(currentDisplayList.subList(0, 3));
