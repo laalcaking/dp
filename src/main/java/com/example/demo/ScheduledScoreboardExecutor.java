@@ -31,6 +31,8 @@ public class ScheduledScoreboardExecutor {
         executor.scheduleAtFixedRate(divideJsonForScreen2, 0, UPDATE_TIME, TimeUnit.MILLISECONDS);
     }
 
+    void startScreen3() { executor.scheduleAtFixedRate(divideJsonForScreen3, 0, UPDATE_TIME, TimeUnit.MILLISECONDS); }
+
     @Getter
     private List<List<DisplayVehicle>> jsonData;
 
@@ -61,6 +63,16 @@ public class ScheduledScoreboardExecutor {
         }
     };
 
+    private final Runnable divideJsonForScreen3 = new Runnable() {
+        @SneakyThrows
+        @Override
+        public void run() {
+            currentDisplayList = generateData();
+            jsonData = divideData(DisplayScreen.THIRD, currentDisplayList);
+            Platform.runLater(() -> MultipleScreens.showScreen3(primaryStage, jsonData));
+        }
+    };
+
     protected List<DisplayVehicle> generateData() throws Exception {
 
         currentDisplayList = new LinkedList<>();
@@ -71,6 +83,16 @@ public class ScheduledScoreboardExecutor {
 
         // Генерация 6 строк JSON
         for (int i = 2; i <= MAX_SCREEN_LINES_BASE; i++) {
+            int randomNumber = random.nextInt(1, 44);
+            String formattedNumber = DisplayVehicle.generateFormattedNumber();
+            DisplayVehicle dv = new DisplayVehicle(formattedNumber, String.valueOf(randomNumber), String.valueOf(i));
+            currentDisplayList.add(dv);
+        }
+
+        currentDisplayList.add(new DisplayVehicle("Ожидайте вызов", "0", "0"));
+
+        // Генерация 6 строк JSON
+        for (int i = 2; i <= MAX_SCREEN_LINES_BASE+1; i++) {
             int randomNumber = random.nextInt(1, 44);
             String formattedNumber = DisplayVehicle.generateFormattedNumber();
             DisplayVehicle dv = new DisplayVehicle(formattedNumber, String.valueOf(randomNumber), String.valueOf(i));
@@ -95,6 +117,11 @@ public class ScheduledScoreboardExecutor {
             case SECOND:
                 // Добавляем в список следующие три элемента списка, начиная с индекса 3
                 dividedLists.add(currentDisplayList.subList(3, 6));
+                nextDisplayScreen = DisplayScreen.THIRD;
+                break;
+            case THIRD:
+                // Добавляем в список следующие три элемента списка, начиная с индекса 6
+                dividedLists.add(currentDisplayList.subList(6, 13));
                 nextDisplayScreen = DisplayScreen.FIRST;
                 break;
             default:

@@ -5,6 +5,7 @@ module com.example.demo {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires javafx.graphics;
 
 
     opens com.example.demo to javafx.fxml;
