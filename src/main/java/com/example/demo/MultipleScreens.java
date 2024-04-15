@@ -52,12 +52,12 @@ public class MultipleScreens extends Application {
             String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
             String[] dockNumbersArray = dockNumbers.toArray(new String[0]);
 
-            controller.setBlinkingLabel(vehicleNumbersArray[0]);
-            controller.setVehicleNumber2(vehicleNumbersArray[1]);
-            controller.setVehicleNumber3(vehicleNumbersArray[2]);
+            controller.setBlinkingLabel(vehicleNumbersArray.length > 0 ? vehicleNumbersArray[0] : "");
+            controller.setVehicleNumber2(vehicleNumbersArray.length > 1 ? vehicleNumbersArray[1] : "");
+            controller.setVehicleNumber3(vehicleNumbersArray.length > 2 ? vehicleNumbersArray[2] : "");
 
-            controller.setDock2(dockNumbersArray[1]);
-            controller.setDock3(dockNumbersArray[2]);
+            controller.setDock2(dockNumbersArray.length > 1 ? dockNumbersArray[1] : "");
+            controller.setDock3(dockNumbersArray.length > 2 ? dockNumbersArray[2] : "");
 
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.setResizable(false);
@@ -87,13 +87,13 @@ public class MultipleScreens extends Application {
             String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
             String[] dockNumbersArray = dockNumbers.toArray(new String[0]);
 
-            controller.setVehicleNumber1(vehicleNumbersArray[0]);
-            controller.setVehicleNumber2(vehicleNumbersArray[1]);
-            controller.setVehicleNumber3(vehicleNumbersArray[2]);
+            controller.setVehicleNumber1(vehicleNumbersArray.length > 0 ? vehicleNumbersArray[0] : "");
+            controller.setVehicleNumber2(vehicleNumbersArray.length > 1 ? vehicleNumbersArray[1] : "");
+            controller.setVehicleNumber3(vehicleNumbersArray.length > 2 ? vehicleNumbersArray[2] : "");
 
-            controller.setDock1(dockNumbersArray[0]);
-            controller.setDock2(dockNumbersArray[1]);
-            controller.setDock3(dockNumbersArray[2]);
+            controller.setDock1(dockNumbersArray.length > 0 ? dockNumbersArray[0] : "");
+            controller.setDock2(dockNumbersArray.length > 1 ? dockNumbersArray[1] : "");
+            controller.setDock3(dockNumbersArray.length > 2 ? dockNumbersArray[2] : "");
 
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.setResizable(false);
@@ -121,10 +121,10 @@ public class MultipleScreens extends Application {
             String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
 
             controller.setWaiting(vehicleNumbersArray[0]);
-            controller.setVehicleNumber1(vehicleNumbersArray[1]);
-            controller.setVehicleNumber2(vehicleNumbersArray[2]);
-            controller.setVehicleNumber3(vehicleNumbersArray[3]);
-            controller.setVehicleNumber4(vehicleNumbersArray[4]);
+            controller.setVehicleNumber1(vehicleNumbersArray.length > 1 ? vehicleNumbersArray[1] : "");
+            controller.setVehicleNumber2(vehicleNumbersArray.length > 2 ? vehicleNumbersArray[2] : "");
+            controller.setVehicleNumber3(vehicleNumbersArray.length > 3 ? vehicleNumbersArray[3] : "");
+            controller.setVehicleNumber4(vehicleNumbersArray.length > 4 ? vehicleNumbersArray[4] : "");
 
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.setResizable(false);
@@ -151,12 +151,12 @@ public class MultipleScreens extends Application {
             }
             String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
 
-            controller.setVehicleNumber1(vehicleNumbersArray[0]);
-            controller.setVehicleNumber2(vehicleNumbersArray[1]);
-            controller.setVehicleNumber3(vehicleNumbersArray[2]);
-            controller.setVehicleNumber4(vehicleNumbersArray[3]);
-            controller.setVehicleNumber5(vehicleNumbersArray[4]);
-            controller.setVehicleNumber6(vehicleNumbersArray[5]);
+            controller.setVehicleNumber1(vehicleNumbersArray.length > 0 ? vehicleNumbersArray[0] : "");
+            controller.setVehicleNumber2(vehicleNumbersArray.length > 1 ? vehicleNumbersArray[1] : "");
+            controller.setVehicleNumber3(vehicleNumbersArray.length > 2 ? vehicleNumbersArray[2] : "");
+            controller.setVehicleNumber4(vehicleNumbersArray.length > 3 ? vehicleNumbersArray[3] : "");
+            controller.setVehicleNumber5(vehicleNumbersArray.length > 4 ? vehicleNumbersArray[4] : "");
+            controller.setVehicleNumber6(vehicleNumbersArray.length > 5 ? vehicleNumbersArray[5] : "");
 
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.setResizable(false);

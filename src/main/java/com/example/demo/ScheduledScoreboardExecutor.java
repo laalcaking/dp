@@ -91,7 +91,7 @@ public class ScheduledScoreboardExecutor {
 
         Random random = new Random();
 
-        currentDisplayList.add(new DisplayVehicle("Вызов на приемку", "0", "0"));
+        currentDisplayList.add(0, new DisplayVehicle("Вызов на приемку", "0", "0"));
 
         // Генерация 6 строк JSON
         for (int i = 2; i <= MAX_SCREEN_LINES_BASE; i++) {
@@ -101,10 +101,10 @@ public class ScheduledScoreboardExecutor {
             currentDisplayList.add(dv);
         }
 
-        currentDisplayList.add(new DisplayVehicle("Ожидайте вызов", "0", "0"));
+        currentDisplayList.add( new DisplayVehicle( "Ожидайте вызов", "0", "0"));
 
-        // Генерация 12 строк JSON
-        for (int i = 2; i <= 11; i++) {
+        // Генерация 10 строк JSON
+        for (int i = 0; i <= 9; i++) {
             int randomNumber = random.nextInt(1, 44);
             String formattedNumber = DisplayVehicle.generateFormattedNumber();
             DisplayVehicle dv = new DisplayVehicle(formattedNumber, String.valueOf(randomNumber), String.valueOf(i));
@@ -118,22 +118,24 @@ public class ScheduledScoreboardExecutor {
         removeExpiredVehicles();
 
         List<List<DisplayVehicle>> dividedLists = new ArrayList<>();
+        int endIndex;
+
         switch (screen) {
             case FIRST:
-                // Добавляем в список первые три элемента списка
-                dividedLists.add(currentDisplayList.subList(0, 3));
+                endIndex = Math.min(3, currentDisplayList.size());
+                dividedLists.add(currentDisplayList.subList(0, endIndex));
                 break;
             case SECOND:
-                // Добавляем в список следующие три элемента списка, начиная с индекса 3
-                dividedLists.add(currentDisplayList.subList(3, 6));
+                endIndex = Math.min(6, currentDisplayList.size());
+                dividedLists.add(currentDisplayList.subList(3, endIndex));
                 break;
             case THIRD:
-                // Добавляем в список следующие пять элемента списка, начиная с индекса 6
-                dividedLists.add(currentDisplayList.subList(6, 11));
+                endIndex = Math.min(11, currentDisplayList.size());
+                dividedLists.add(currentDisplayList.subList(6, endIndex));
                 break;
             case FOURTH:
-                // Добавляем в список следующие шесть элемента списка, начиная с индекса 11
-                dividedLists.add(currentDisplayList.subList(11, 17));
+                endIndex = Math.min(17, currentDisplayList.size());
+                dividedLists.add(currentDisplayList.subList(11, endIndex));
                 break;
             default:
                 throw new Exception("Display screen not found");
