@@ -15,12 +15,14 @@ public class MultipleScreens extends Application {
     private final ScheduledScoreboardExecutor executor1;
     private final ScheduledScoreboardExecutor executor2;
     private final ScheduledScoreboardExecutor executor3;
+    private final ScheduledScoreboardExecutor executor4;
 
 
     public MultipleScreens() {
         this.executor1 = new ScheduledScoreboardExecutor(new Stage());
         this.executor2 = new ScheduledScoreboardExecutor(new Stage());
         this.executor3 = new ScheduledScoreboardExecutor(new Stage());
+        this.executor4 = new ScheduledScoreboardExecutor(new Stage());
     }
 
     @Override
@@ -28,6 +30,7 @@ public class MultipleScreens extends Application {
         executor1.startScreen1();
         executor2.startScreen2();
         executor3.startScreen3();
+        executor4.startScreen4();
     }
 
     protected static void showScreen1(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
@@ -122,8 +125,38 @@ public class MultipleScreens extends Application {
             controller.setVehicleNumber2(vehicleNumbersArray[2]);
             controller.setVehicleNumber3(vehicleNumbersArray[3]);
             controller.setVehicleNumber4(vehicleNumbersArray[4]);
-            controller.setVehicleNumber5(vehicleNumbersArray[5]);
-            controller.setVehicleNumber6(vehicleNumbersArray[6]);
+
+            primaryStage.setScene(new Scene(root, 500, 400));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+
+            primaryStage.setOnCloseRequest(event -> System.exit('0'));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected static void showScreen4(Stage primaryStage, List<List<DisplayVehicle>> jsonDataLists) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MultipleScreens.class.getResource("/Screen4.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Screen4Controller controller = fxmlLoader.getController();
+
+            List<String> vehicleNumbers = new ArrayList<>();
+            for (List<DisplayVehicle> dataList : jsonDataLists) {
+                for (DisplayVehicle data : dataList) {
+                    vehicleNumbers.add(data.getVehicleNumber());
+                }
+            }
+            String[] vehicleNumbersArray = vehicleNumbers.toArray(new String[0]);
+
+            controller.setVehicleNumber1(vehicleNumbersArray[0]);
+            controller.setVehicleNumber2(vehicleNumbersArray[1]);
+            controller.setVehicleNumber3(vehicleNumbersArray[2]);
+            controller.setVehicleNumber4(vehicleNumbersArray[3]);
+            controller.setVehicleNumber5(vehicleNumbersArray[4]);
+            controller.setVehicleNumber6(vehicleNumbersArray[5]);
 
             primaryStage.setScene(new Scene(root, 500, 400));
             primaryStage.setResizable(false);

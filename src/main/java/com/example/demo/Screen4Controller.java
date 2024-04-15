@@ -3,10 +3,8 @@ package com.example.demo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class Screen3Controller {
+public class Screen4Controller {
 
-    @FXML
-    private Label waiting;
     @FXML
     private Label vehicle1;
     @FXML
@@ -15,10 +13,10 @@ public class Screen3Controller {
     private Label vehicle3;
     @FXML
     private Label vehicle4;
-
-    public void setWaiting(String vehicleNumber) {
-        waiting.setText(vehicleNumber);
-    }
+    @FXML
+    private Label vehicle5;
+    @FXML
+    private Label vehicle6;
 
     public void setVehicleNumber1(String vehicleNumber) {
         vehicle1.setText(vehicleNumber);
@@ -34,6 +32,14 @@ public class Screen3Controller {
 
     public void setVehicleNumber4(String vehicleNumber) {
         vehicle4.setText(vehicleNumber);
+    }
+
+    public void setVehicleNumber5(String vehicleNumber) {
+        vehicle5.setText(vehicleNumber);
+    }
+
+    public void setVehicleNumber6(String vehicleNumber) {
+        vehicle6.setText(vehicleNumber);
     }
 
 }

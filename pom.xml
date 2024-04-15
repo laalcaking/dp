@@ -68,6 +68,7 @@
                     <include> Screen1.fxml </include>
                     <include> Screen2.fxml </include>
                     <include> Screen3.fxml </include>
+                    <include> Screen4.fxml </include>
                 </includes>
             </resource>
         </resources>
